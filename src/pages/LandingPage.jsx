@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useLowBandwidth } from '../context/LowBandwidthContext';
@@ -7,51 +7,48 @@ import { SmartCompetencyMapper } from '../components/differentiators/SmartCompet
 import { SkillMatrixHeatmap } from '../components/differentiators/SkillMatrixHeatmap';
 import { CertificateVerifier } from '../components/differentiators/CertificateVerifier';
 import {
-  CloudLightning,
-  Sparkles,
-  ArrowRight,
-  ShieldCheck,
   BookOpen,
   Users,
   Award,
-  Zap,
-  CheckCircle2,
   Clock,
-  Radio,
+  Sparkles,
+  ArrowRight,
+  ShieldCheck,
+  CheckCircle2,
   FileCheck,
-  TrendingUp,
-  Cpu,
-  WifiOff,
+  Bell,
   Star,
   ChevronRight,
-  Bell
+  MapPin,
+  Building2,
+  Send,
+  WifiOff
 } from 'lucide-react';
 
 export const LandingPage = () => {
   const { currentUser, courses, enrollCourse } = useAuth();
   const { lowBandwidthMode, toggleLowBandwidth } = useLowBandwidth();
-  const [activeTab, setActiveTab] = useState('courses');
 
   // Featured courses: first 4
   const featuredCourses = courses.slice(0, 4);
 
   return (
-    <div className="space-y-16 pb-20">
+    <div id="main-content" className="space-y-12 pb-16">
       
-      {/* 1. Live Announcements Marquee / Ticker */}
-      <section className="bg-gradient-to-r from-amber-500/10 via-sky-500/10 to-amber-500/10 border-b border-amber-500/20 py-2.5 px-4 text-xs">
+      {/* 1. Live Announcements Bulletin Marquee */}
+      <section className="bg-amber-50/80 border-b border-amber-200/80 py-2 px-4 sm:px-6 lg:px-8 text-xs">
         <div className="max-w-7xl mx-auto flex items-center gap-3">
-          <div className="flex items-center gap-1.5 font-bold text-amber-700 uppercase tracking-wider bg-amber-100 px-2.5 py-0.5 rounded-full shrink-0 border border-amber-300">
-            <Bell className="w-3.5 h-3.5 animate-bounce" />
-            <span>National Directive</span>
+          <div className="flex items-center gap-1.5 font-bold text-amber-900 uppercase tracking-wider bg-amber-200/70 px-2.5 py-0.5 rounded text-[11px] shrink-0 border border-amber-300">
+            <Bell className="w-3.5 h-3.5 text-amber-800" />
+            <span>Latest Directives</span>
           </div>
           <div className="overflow-hidden relative w-full">
             <div className="flex items-center gap-6 whitespace-nowrap overflow-x-auto no-scrollbar py-0.5">
               {MOCK_ANNOUNCEMENTS.map((ann) => (
                 <div key={ann.id} className="inline-flex items-center gap-2 text-slate-800 font-medium">
-                  <span className="w-1.5 h-1.5 rounded-full bg-sky-600"></span>
-                  <span className="font-semibold text-sky-900">{ann.title}</span>
-                  <span className="text-[10px] text-slate-500">({ann.date})</span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-sky-700"></span>
+                  <span className="font-semibold text-slate-900">{ann.title}</span>
+                  <span className="text-[10px] text-slate-500">[{ann.date}]</span>
                 </div>
               ))}
             </div>
@@ -59,98 +56,89 @@ export const LandingPage = () => {
         </div>
       </section>
 
-      {/* 2. Hero Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">
-        <div className="relative rounded-3xl bg-gradient-to-br from-[#081426] via-[#0b1e36] to-[#0d3880] text-white p-8 sm:p-12 lg:p-16 overflow-hidden border border-slate-700/80 shadow-2xl">
+      {/* 2. Hero Section: Clean, Authoritative Government Portal Banner */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-2">
+        <div className="bg-gradient-to-r from-[#0c2340] via-[#102e54] to-[#143d70] rounded-2xl p-8 sm:p-12 text-white shadow-md border-b-4 border-amber-500 relative overflow-hidden">
           
-          {/* Subtle Radar Ring Background Visual */}
-          <div className="absolute right-0 top-0 w-96 h-96 opacity-10 pointer-events-none transform translate-x-20 -translate-y-20">
-            <img src="/imd-logo.svg" alt="Radar Pattern" className="w-full h-full object-contain" />
-          </div>
-
-          <div className="relative z-10 max-w-3xl space-y-6">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-500/20 border border-sky-400/40 text-sky-300 text-xs font-semibold uppercase tracking-wider">
-              <Sparkles className="w-3.5 h-3.5 text-sky-400" />
-              <span>MoES Mission Mausam & SIH 2026 Initiative</span>
+          <div className="relative z-10 max-w-3xl space-y-5">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-sky-200 text-xs font-semibold uppercase tracking-wider border border-white/20">
+              <ShieldCheck className="w-3.5 h-3.5 text-amber-400" />
+              <span>Smart India Hackathon 2026 · Problem Statement ID: 26075</span>
             </div>
 
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-[1.15] font-['Outfit']">
+            <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight font-['Outfit'] leading-tight">
               CAPACITY CONNECT
-              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-teal-300 to-amber-300 mt-1">
-                Empowering India's Meteorological Workforce
+              <span className="block text-sky-200 font-medium text-lg sm:text-2xl mt-1">
+                A Digital Capacity Building & LMS Portal for India's Meteorological Workforce
               </span>
             </h1>
 
-            <p className="text-sm sm:text-base text-slate-200 leading-relaxed font-normal">
-              A unified, cloud-native Learning Management & Competency Tracking System designed specifically for the Ministry of Earth Sciences (MoES) and India Meteorological Department (IMD). Connecting all 6 Regional Meteorological Centres (RMCs) and 100+ high-altitude, coastal, and island observatories with zero latency.
+            <p className="text-xs sm:text-sm text-slate-200 leading-relaxed font-normal">
+              An institutional Learning Management and Competency Tracking System developed for the <strong>Ministry of Earth Sciences (MoES)</strong> and <strong>India Meteorological Department (IMD)</strong>. Unifying 6 Regional Meteorological Centres (RMCs) and 120+ observatories into a standardized, low-bandwidth-ready digital training ecosystem.
             </p>
 
             {/* CTAs */}
-            <div className="pt-2 flex flex-wrap items-center gap-3.5">
+            <div className="pt-2 flex flex-wrap items-center gap-3">
               <Link
                 to={currentUser ? (currentUser.role === 'admin' ? '/admin' : currentUser.role === 'trainer' ? '/trainer' : '/trainee') : '/login'}
-                className="px-6 py-3 bg-gradient-to-r from-sky-500 to-sky-600 hover:from-sky-400 hover:to-sky-500 text-white font-bold rounded-xl text-sm transition shadow-lg flex items-center gap-2 group"
+                className="px-5 py-2.5 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold rounded-lg text-xs sm:text-sm transition shadow flex items-center gap-2"
               >
-                <span>{currentUser ? `Go to ${currentUser.role.toUpperCase()} Workspace` : 'Access Trainee & Scientist Portal'}</span>
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition" />
+                <span>{currentUser ? `Go to ${currentUser.role.toUpperCase()} Workspace` : 'Sign In to Official LMS Portal'}</span>
+                <ArrowRight className="w-4 h-4" />
               </Link>
 
               <Link
                 to="/courses"
-                className="px-6 py-3 bg-slate-800/90 hover:bg-slate-800 text-white font-semibold rounded-xl text-sm transition border border-slate-600 flex items-center gap-2"
+                className="px-5 py-2.5 bg-white/10 hover:bg-white/20 text-white font-semibold rounded-lg text-xs sm:text-sm transition border border-white/30 flex items-center gap-2"
               >
-                <BookOpen className="w-4 h-4 text-sky-400" />
-                <span>Explore Course Catalog</span>
+                <BookOpen className="w-4 h-4 text-sky-300" />
+                <span>Browse Course Catalog</span>
               </Link>
 
               <button
                 onClick={toggleLowBandwidth}
-                className={`px-4 py-3 rounded-xl text-xs font-semibold transition border flex items-center gap-2 ${
+                className={`px-3.5 py-2.5 rounded-lg text-xs font-semibold transition border flex items-center gap-1.5 ${
                   lowBandwidthMode
-                    ? 'bg-amber-500 text-slate-950 border-amber-400'
-                    : 'bg-slate-900/60 hover:bg-slate-900 text-slate-300 border-slate-700'
+                    ? 'bg-amber-400 text-slate-950 border-amber-300 font-bold'
+                    : 'bg-black/30 hover:bg-black/50 text-slate-200 border-white/20'
                 }`}
               >
-                <WifiOff className="w-4 h-4" />
+                <WifiOff className="w-3.5 h-3.5" />
                 <span>{lowBandwidthMode ? '2G Bandwidth Active' : 'Low-Bandwidth Mode'}</span>
               </button>
             </div>
 
-            {/* Feature Pills */}
-            <div className="pt-4 border-t border-slate-700/60 flex flex-wrap items-center gap-4 text-xs text-slate-300">
-              <div className="flex items-center gap-1.5">
-                <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                <span>Offline PWA Caching</span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                <span>AI Competency Matching</span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                <span>Verifiable SHA-256 Certificates</span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                <span>Emergency Scenario Drills</span>
-              </div>
+            {/* Feature Badges */}
+            <div className="pt-4 border-t border-white/10 flex flex-wrap items-center gap-4 text-xs text-slate-300">
+              <span className="flex items-center gap-1">
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" /> Offline PWA Enabled
+              </span>
+              <span className="flex items-center gap-1">
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" /> AI Competency Matching
+              </span>
+              <span className="flex items-center gap-1">
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" /> SHA-256 Verifiable Certificates
+              </span>
+              <span className="flex items-center gap-1">
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" /> Emergency Drill Readiness
+              </span>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 3. National Stats Strip */}
+      {/* 3. Official Government Statistics Strip */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {MOCK_ACHIEVEMENTS.map((ach) => (
             <div
               key={ach.id}
-              className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition text-center"
+              className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm text-center"
             >
-              <div className="text-3xl sm:text-4xl font-black text-sky-800 font-['Outfit']">
+              <div className="text-2xl sm:text-3xl font-black text-[#0c2340] font-['Outfit']">
                 {ach.metric}
               </div>
-              <div className="text-xs sm:text-sm font-bold text-slate-800 mt-1">
+              <div className="text-xs font-bold text-slate-800 mt-1">
                 {ach.title}
               </div>
               <div className="text-[11px] text-slate-500 mt-0.5 leading-snug">
@@ -161,50 +149,42 @@ export const LandingPage = () => {
         </div>
       </section>
 
-      {/* 4. Interactive How It Works Workflow Pipeline */}
+      {/* 4. How It Works Pipeline */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-2xl mx-auto mb-10">
-          <span className="text-xs font-bold text-sky-600 uppercase tracking-wider bg-sky-50 px-3 py-1 rounded-full border border-sky-200">
-            Standardized Government Lifecycle
-          </span>
-          <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 font-['Outfit'] mt-2">
-            End-to-End Capacity Building Workflow
-          </h2>
-          <p className="text-xs sm:text-sm text-slate-600 mt-1">
-            Replaces manual paper registers and fragmented local training with a verified 6-stage digital pipeline.
-          </p>
-        </div>
+        <div className="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 shadow-sm">
+          <div className="text-center max-w-xl mx-auto mb-8">
+            <span className="text-[11px] font-bold text-sky-800 uppercase tracking-wider bg-sky-50 px-2.5 py-1 rounded border border-sky-200">
+              Government Standard Process
+            </span>
+            <h2 className="text-xl sm:text-2xl font-bold text-slate-900 font-['Outfit'] mt-1.5">
+              Standardized Capacity Building Lifecycle
+            </h2>
+            <p className="text-xs text-slate-600 mt-1">
+              End-to-end digital lifecycle replacing paper registers with certified verification.
+            </p>
+          </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-6 gap-3">
-          {[
-            { step: '01', title: 'Register', desc: 'Station personnel register with Govt Employee ID', icon: Users },
-            { step: '02', title: 'Admin Verification', desc: 'MoES / Station Head RBAC approval', icon: ShieldCheck },
-            { step: '03', title: 'Domain Enroll', desc: 'Choose specialized DWR, NWP or Cyclone track', icon: BookOpen },
-            { step: '04', title: 'Learn & PWA Cache', desc: 'Adaptive bitrate video & offline docs', icon: CloudLightning },
-            { step: '05', title: 'Timed MCQ Test', desc: 'Real-time countdown & auto-grading', icon: Clock },
-            { step: '06', title: 'SHA-256 Certify', desc: 'Tamper-proof verifiable credential', icon: FileCheck },
-          ].map((item, idx) => {
-            const Icon = item.icon;
-            return (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-3">
+            {[
+              { step: '1', title: 'Register', desc: 'Personnel sign up with Official Govt Employee ID' },
+              { step: '2', title: 'RBAC Approval', desc: 'Station Head / MoES Admin authorization' },
+              { step: '3', title: 'Enrollment', desc: 'Select DWR, NWP or Cyclone modules' },
+              { step: '4', title: 'Learn & Cache', desc: 'Offline PWA documents & 2G text mode' },
+              { step: '5', title: 'Timed Test', desc: '15-min countdown & instant grading' },
+              { step: '6', title: 'Certification', desc: 'Verifiable SHA-256 digital certificate' }
+            ].map((item, idx) => (
               <div
                 key={idx}
-                className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm relative group hover:border-sky-400 transition"
+                className="p-3.5 bg-slate-50 rounded-xl border border-slate-200 text-center space-y-1 relative"
               >
-                <div className="text-sky-600 font-mono font-bold text-xs mb-2">
-                  STAGE {item.step}
+                <div className="w-7 h-7 mx-auto rounded-full bg-[#0c2340] text-white font-bold text-xs flex items-center justify-center mb-1">
+                  {item.step}
                 </div>
-                <div className="w-8 h-8 rounded-lg bg-sky-50 text-sky-600 flex items-center justify-center mb-3 group-hover:bg-sky-600 group-hover:text-white transition">
-                  <Icon className="w-4 h-4" />
-                </div>
-                <h3 className="font-bold text-slate-900 text-xs sm:text-sm mb-1">
-                  {item.title}
-                </h3>
-                <p className="text-[11px] text-slate-500 leading-relaxed">
-                  {item.desc}
-                </p>
+                <div className="font-bold text-slate-900 text-xs">{item.title}</div>
+                <div className="text-[11px] text-slate-500 leading-snug">{item.desc}</div>
               </div>
-            );
-          })}
+            ))}
+          </div>
         </div>
       </section>
 
@@ -218,162 +198,76 @@ export const LandingPage = () => {
         <SkillMatrixHeatmap />
       </section>
 
-      {/* 7. Featured Courses Section */}
+      {/* 7. Featured Operational Modules */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6">
           <div>
-            <span className="text-xs font-bold text-sky-600 uppercase tracking-wider bg-sky-50 px-3 py-1 rounded-full border border-sky-200">
-              Curriculum Catalog
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 font-['Outfit'] mt-2">
+            <h2 className="text-xl sm:text-2xl font-bold text-slate-900 font-['Outfit']">
               Featured Operational Modules
             </h2>
-            <p className="text-xs sm:text-sm text-slate-600 mt-1">
-              Curated by IMD senior scientists and validated by MoES Training Board.
+            <p className="text-xs text-slate-600">
+              National curricula accredited by the Ministry of Earth Sciences Training Cell.
             </p>
           </div>
           <Link
             to="/courses"
-            className="text-xs font-semibold text-sky-600 hover:text-sky-800 flex items-center gap-1 group"
+            className="text-xs font-semibold text-sky-700 hover:text-sky-900 flex items-center gap-1"
           >
             <span>View All Courses</span>
-            <ChevronRight className="w-4 h-4 group-hover:translate-x-0.5 transition" />
+            <ChevronRight className="w-4 h-4" />
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
           {featuredCourses.map((course) => (
             <div
               key={course.id}
-              className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-lg transition flex flex-col group"
+              className="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-md transition flex flex-col justify-between"
             >
-              {/* Course Thumbnail Image */}
-              <div className="relative h-40 overflow-hidden bg-slate-900">
-                <img
-                  src={course.thumbnail}
-                  alt={course.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
-                />
-                <div className="absolute top-2 left-2 bg-[#0b1e36]/80 backdrop-blur-md px-2 py-0.5 rounded text-[10px] font-mono text-sky-300 border border-sky-400/30">
-                  {course.code}
+              <div className="p-4 space-y-2">
+                <div className="flex items-center justify-between text-[10px]">
+                  <span className="font-mono font-bold text-sky-800 bg-sky-50 px-2 py-0.5 rounded border border-sky-200">
+                    {course.code}
+                  </span>
+                  <span className="text-slate-500 font-semibold">{course.level}</span>
                 </div>
-                <div className="absolute top-2 right-2 bg-emerald-600 text-white px-2 py-0.5 rounded text-[10px] font-bold">
-                  {course.level}
+
+                <h3 className="font-bold text-slate-900 text-sm leading-snug line-clamp-2">
+                  {course.title}
+                </h3>
+
+                <p className="text-xs text-slate-500 line-clamp-2 leading-relaxed">
+                  {course.description}
+                </p>
+
+                <div className="text-[11px] text-slate-600 pt-1 flex items-center justify-between">
+                  <span>{course.duration}</span>
+                  <span className="text-amber-700 font-semibold">★ {course.rating}</span>
                 </div>
               </div>
 
-              {/* Course Details */}
-              <div className="p-4 flex-1 flex flex-col justify-between">
-                <div>
-                  <div className="text-[11px] font-semibold text-sky-700 uppercase tracking-wide">
-                    {course.domain}
-                  </div>
-                  <h3 className="font-bold text-slate-900 text-sm mt-1 line-clamp-2 leading-snug">
-                    {course.title}
-                  </h3>
-                  <p className="text-xs text-slate-500 mt-1.5 line-clamp-2 leading-relaxed">
-                    {course.description}
-                  </p>
-                </div>
-
-                <div className="mt-4 pt-3 border-t border-slate-100 space-y-3">
-                  <div className="flex items-center justify-between text-xs text-slate-500">
-                    <span className="flex items-center gap-1">
-                      <Clock className="w-3.5 h-3.5 text-slate-400" />
-                      {course.duration}
-                    </span>
-                    <span className="flex items-center gap-1 text-amber-600 font-semibold">
-                      <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
-                      {course.rating}
-                    </span>
-                  </div>
-
-                  <div className="flex items-center gap-2">
-                    <Link
-                      to={`/course/${course.id}`}
-                      className="flex-1 text-center py-2 bg-sky-600 hover:bg-sky-700 text-white rounded-xl text-xs font-semibold transition shadow-sm"
-                    >
-                      Open Player
-                    </Link>
-                    <button
-                      onClick={() => enrollCourse(course.id)}
-                      className="px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-semibold transition"
-                      title="Enroll"
-                    >
-                      Enroll
-                    </button>
-                  </div>
-                </div>
+              <div className="p-3 bg-slate-50 border-t border-slate-100 flex items-center gap-2">
+                <Link
+                  to={`/course/${course.id}`}
+                  className="flex-1 py-1.5 text-center bg-[#0c2340] hover:bg-[#143d70] text-white rounded-lg text-xs font-semibold transition"
+                >
+                  Open Player
+                </Link>
+                <button
+                  onClick={() => enrollCourse(course.id)}
+                  className="px-3 py-1.5 bg-white border border-slate-300 hover:bg-slate-100 text-slate-700 rounded-lg text-xs font-semibold transition"
+                >
+                  Enroll
+                </button>
               </div>
             </div>
           ))}
         </div>
       </section>
 
-      {/* 8. Public Certificate Verification Quick Callout */}
+      {/* 8. Public Certificate Registry Quick Lookup */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <CertificateVerifier initialCertId="IMD-CERT-2025-SAT-4819" />
-      </section>
-
-      {/* 9. Station Testimonials & Governance Endorsements */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-slate-100/80 rounded-3xl p-8 sm:p-10 border border-slate-200">
-          <div className="text-center max-w-xl mx-auto mb-8">
-            <h3 className="text-xl sm:text-2xl font-bold text-slate-900 font-['Outfit']">
-              Trusted Across India's Meteorological Network
-            </h3>
-            <p className="text-xs sm:text-sm text-slate-600 mt-1">
-              Field observations on transition from manual logs to Capacity Connect.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm text-xs space-y-3">
-              <p className="italic text-slate-700 leading-relaxed">
-                "At Leh observatory, 2G connectivity and severe winters previously meant waiting months for offline training in Delhi. Capacity Connect's PWA caching allows our team to study radar and avalanche manuals seamlessly offline."
-              </p>
-              <div className="pt-2 border-t border-slate-100 flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-full bg-sky-600 text-white font-bold flex items-center justify-center text-xs">
-                  VR
-                </div>
-                <div>
-                  <div className="font-bold text-slate-900">Vikram Rathore</div>
-                  <div className="text-[11px] text-slate-500">MC Leh Ladakh (High Altitude)</div>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm text-xs space-y-3">
-              <p className="italic text-slate-700 leading-relaxed">
-                "During cyclone season, having an exact Readiness Index for all coastal radar stations ensures zero guesswork. The Competency Engine matched our junior forecasters with Dr. Sangeeta Rao for an emergency calibration drill."
-              </p>
-              <div className="pt-2 border-t border-slate-100 flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-full bg-teal-600 text-white font-bold flex items-center justify-center text-xs">
-                  MS
-                </div>
-                <div>
-                  <div className="font-bold text-slate-900">Dr. Meenakshi Sundaram</div>
-                  <div className="text-[11px] text-slate-500">ACWC Lead, RMC Chennai</div>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm text-xs space-y-3">
-              <p className="italic text-slate-700 leading-relaxed">
-                "The verifiable SHA-256 certificates eliminated counterfeit claims. Every training record is now linked to employee ID and station code, saving MoES over ₹14 Crores annually in offline TA/DA expenditures."
-              </p>
-              <div className="pt-2 border-t border-slate-100 flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-full bg-purple-600 text-white font-bold flex items-center justify-center text-xs">
-                  VS
-                </div>
-                <div>
-                  <div className="font-bold text-slate-900">Shri Vikramaditya Sen</div>
-                  <div className="text-[11px] text-slate-500">Director Capacity Building, MoES</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
       </section>
 
     </div>
