@@ -1,0 +1,17 @@
+{
+  "short_name": "CapacityConnect",
+  "name": "CAPACITY CONNECT – MoES / IMD LMS Portal",
+  "icons": [
+    {
+      "src": "/imd-logo.svg",
+      "type": "image/svg+xml",
+      "sizes": "192x192 512x512"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#0b1e36",
+  "theme_color": "#0b1e36",
+  "display": "standalone",
+  "orientation": "portrait",
+  "description": "Digital Capacity Building & LMS Portal for India Meteorological Department (IMD) / Ministry of Earth Sciences (MoES)"
+}

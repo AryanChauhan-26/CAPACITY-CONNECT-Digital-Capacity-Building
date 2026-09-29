@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <defs>
+    <linearGradient id="imdGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0284c7" />
+      <stop offset="50%" stop-color="#0d3880" />
+      <stop offset="100%" stop-color="#081426" />
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f59e0b" />
+      <stop offset="100%" stop-color="#d97706" />
+    </linearGradient>
+  </defs>
+  <!-- Outer Ring with Tech Nodes -->
+  <circle cx="60" cy="60" r="56" fill="none" stroke="url(#imdGrad)" stroke-width="4" stroke-dasharray="8 4"/>
+  <circle cx="60" cy="60" r="50" fill="#0b1e36" stroke="#38bdf8" stroke-width="1.5" />
+  
+  <!-- Radar sweep arcs -->
+  <circle cx="60" cy="60" r="38" fill="none" stroke="#0284c7" stroke-width="1" stroke-opacity="0.4"/>
+  <circle cx="60" cy="60" r="26" fill="none" stroke="#38bdf8" stroke-width="1" stroke-opacity="0.6"/>
+  <circle cx="60" cy="60" r="14" fill="none" stroke="#38bdf8" stroke-width="1" stroke-opacity="0.8"/>
+  
+  <!-- Cyclone / Wave Motif -->
+  <path d="M60 20 C75 20, 95 35, 95 60 C95 80, 80 95, 60 95 C45 95, 25 80, 25 60 C25 45, 40 32, 55 35 C68 38, 75 48, 72 60 C70 70, 60 74, 52 70" fill="none" stroke="url(#goldGrad)" stroke-width="3" stroke-linecap="round" />
+  
+  <!-- Satellite & Radio pulses -->
+  <circle cx="60" cy="60" r="5" fill="#f8fafc" />
+  <circle cx="60" cy="60" r="2" fill="#0284c7" />
+  
+  <!-- Cardinal ticks -->
+  <line x1="60" y1="12" x2="60" y2="18" stroke="#38bdf8" stroke-width="2" />
+  <line x1="60" y1="102" x2="60" y2="108" stroke="#38bdf8" stroke-width="2" />
+  <line x1="12" y1="60" x2="18" y2="60" stroke="#38bdf8" stroke-width="2" />
+  <line x1="102" y1="60" x2="108" y2="60" stroke="#38bdf8" stroke-width="2" />
+</svg>
