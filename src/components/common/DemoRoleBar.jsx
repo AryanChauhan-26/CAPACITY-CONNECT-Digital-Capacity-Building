@@ -14,112 +14,143 @@ import {
 
 export const DemoRoleBar = () => {
   const { currentUser, switchRole, resetDemoData } = useAuth();
-  const { lowBandwidthMode, toggleLowBandwidth } = useLowBandwidth();
-  const [collapsed, setCollapsed] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
 
   const handleRoleSelect = (role, redirectPath) => {
     switchRole(role);
+    setIsOpen(false);
     if (redirectPath) {
       navigate(redirectPath);
     }
   };
 
+  const getRoleBadge = (role) => {
+    if (role === 'admin') return { label: 'Admin (MoES)', color: 'bg-purple-500/20 text-purple-300 border-purple-500/40' };
+    if (role === 'trainer') return { label: 'Trainer (IMD)', color: 'bg-teal-500/20 text-teal-300 border-teal-500/40' };
+    return { label: 'Trainee', color: 'bg-sky-500/20 text-sky-300 border-sky-500/40' };
+  };
+
+  const activeBadge = getRoleBadge(currentUser?.role);
+
   return (
-    <div className="fixed bottom-3 right-3 z-40 max-w-sm sm:max-w-md w-auto">
-      <div className="bg-[#0c2340] border-2 border-amber-400 text-white rounded-xl shadow-2xl overflow-hidden transition-all text-xs">
-        
-        {/* Header Bar */}
-        <div className="px-3 py-1.5 bg-[#08172b] flex items-center justify-between border-b border-slate-700">
-          <div className="flex items-center gap-1.5">
-            <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
-            <span className="font-bold text-amber-300 uppercase tracking-wider text-[10px]">
-              SIH 2026 Evaluation Toolbar
-            </span>
-          </div>
-
-          <div className="flex items-center gap-1">
-            <button
-              onClick={resetDemoData}
-              title="Reset sample data"
-              className="text-slate-400 hover:text-white p-0.5 rounded"
-            >
-              <RotateCcw className="w-3 h-3" />
-            </button>
-            <button
-              onClick={() => setCollapsed(!collapsed)}
-              className="text-slate-400 hover:text-white p-0.5 rounded"
-            >
-              {collapsed ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
-            </button>
-          </div>
-        </div>
-
-        {/* Content Body */}
-        {!collapsed && (
-          <div className="p-2.5 space-y-2 text-xs">
-            <div className="flex items-center justify-between text-[11px] text-slate-300">
-              <span>Active Role:</span>
-              <span className="font-bold text-amber-300">
-                {currentUser ? `${currentUser.name} (${currentUser.role.toUpperCase()})` : 'Public Guest'}
+    <div className="fixed bottom-4 right-4 z-40">
+      {!isOpen ? (
+        /* Sleek Minimized Floating Pill */
+        <button
+          onClick={() => setIsOpen(true)}
+          className="flex items-center gap-2.5 bg-[#0c2340]/90 hover:bg-[#0c2340] text-white backdrop-blur-md px-3.5 py-2 rounded-full border border-slate-700/80 shadow-xl transition-all hover:scale-105 group"
+          title="Switch evaluation persona"
+        >
+          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span className="text-[11px] font-medium text-slate-300">
+            Persona: <strong className="text-white">{currentUser?.name?.split(' ')[0] || 'Guest'}</strong>
+          </span>
+          <span className={`text-[10px] px-2 py-0.5 rounded-full border font-semibold ${activeBadge.color}`}>
+            {currentUser?.role?.toUpperCase() || 'ROLE'}
+          </span>
+          <span className="text-[10px] text-sky-400 font-semibold group-hover:underline flex items-center">
+            Switch ▾
+          </span>
+        </button>
+      ) : (
+        /* Refined Expanded Role Switching Dock */
+        <div className="bg-[#0c2340]/95 backdrop-blur-md border border-slate-700 text-white rounded-2xl shadow-2xl overflow-hidden w-80 sm:w-96 animate-in fade-in zoom-in-95 duration-150">
+          
+          {/* Header */}
+          <div className="px-3.5 py-2.5 bg-slate-900/80 flex items-center justify-between border-b border-slate-800">
+            <div className="flex items-center gap-2">
+              <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+              <span className="font-semibold text-white text-xs tracking-wide">
+                Role & Persona Switcher
               </span>
             </div>
 
-            {/* Quick 1-Click Role Switch Buttons */}
-            <div className="grid grid-cols-3 gap-1.5 pt-0.5">
+            <div className="flex items-center gap-1.5">
+              <button
+                onClick={resetDemoData}
+                title="Reset demo data"
+                className="text-slate-400 hover:text-white p-1 rounded-md hover:bg-white/10 transition text-[11px] flex items-center gap-1"
+              >
+                <RotateCcw className="w-3 h-3" />
+                <span>Reset</span>
+              </button>
+              <button
+                onClick={() => setIsOpen(false)}
+                className="text-slate-400 hover:text-white p-1 rounded-md hover:bg-white/10 transition"
+              >
+                <ChevronDown className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+
+          {/* Body */}
+          <div className="p-3 space-y-2.5 text-xs">
+            <div className="text-[11px] text-slate-400">
+              Active: <span className="text-white font-medium">{currentUser?.name}</span> ({currentUser?.role})
+            </div>
+
+            <div className="grid grid-cols-3 gap-2">
               <button
                 onClick={() => handleRoleSelect('trainee', '/trainee')}
-                className={`py-1.5 px-2 rounded-lg border text-center transition ${
+                className={`p-2.5 rounded-xl border text-center transition ${
                   currentUser?.role === 'trainee'
-                    ? 'bg-sky-700 border-sky-400 text-white font-bold'
-                    : 'bg-slate-800 hover:bg-slate-700 border-slate-600 text-slate-200'
+                    ? 'bg-sky-600/30 border-sky-400 text-white font-semibold'
+                    : 'bg-slate-800/60 hover:bg-slate-800 border-slate-700 text-slate-300'
                 }`}
               >
-                <div className="text-[11px] font-bold">🎓 Trainee</div>
-                <div className="text-[9px] text-slate-300">Dr. Ramesh</div>
+                <div className="text-xs font-semibold flex items-center justify-center gap-1">
+                  🎓 Trainee
+                </div>
+                <div className="text-[10px] text-slate-400 mt-0.5">Dr. Ramesh</div>
               </button>
 
               <button
                 onClick={() => handleRoleSelect('trainer', '/trainer')}
-                className={`py-1.5 px-2 rounded-lg border text-center transition ${
+                className={`p-2.5 rounded-xl border text-center transition ${
                   currentUser?.role === 'trainer'
-                    ? 'bg-teal-700 border-teal-400 text-white font-bold'
-                    : 'bg-slate-800 hover:bg-slate-700 border-slate-600 text-slate-200'
+                    ? 'bg-teal-600/30 border-teal-400 text-white font-semibold'
+                    : 'bg-slate-800/60 hover:bg-slate-800 border-slate-700 text-slate-300'
                 }`}
               >
-                <div className="text-[11px] font-bold">👨‍🏫 Trainer</div>
-                <div className="text-[9px] text-slate-300">Dr. Sangeeta</div>
+                <div className="text-xs font-semibold flex items-center justify-center gap-1">
+                  👨‍🏫 Trainer
+                </div>
+                <div className="text-[10px] text-slate-400 mt-0.5">Dr. Sangeeta</div>
               </button>
 
               <button
                 onClick={() => handleRoleSelect('admin', '/admin')}
-                className={`py-1.5 px-2 rounded-lg border text-center transition ${
+                className={`p-2.5 rounded-xl border text-center transition ${
                   currentUser?.role === 'admin'
-                    ? 'bg-purple-700 border-purple-400 text-white font-bold'
-                    : 'bg-slate-800 hover:bg-slate-700 border-slate-600 text-slate-200'
+                    ? 'bg-purple-600/30 border-purple-400 text-white font-semibold'
+                    : 'bg-slate-800/60 hover:bg-slate-800 border-slate-700 text-slate-300'
                 }`}
               >
-                <div className="text-[11px] font-bold">🛡️ MoES Admin</div>
-                <div className="text-[9px] text-slate-300">Dir. Vikram</div>
+                <div className="text-xs font-semibold flex items-center justify-center gap-1">
+                  🛡️ Admin
+                </div>
+                <div className="text-[10px] text-slate-400 mt-0.5">Dir. Vikram</div>
               </button>
             </div>
 
-            <div className="pt-1 border-t border-slate-700 flex items-center justify-between text-[10px] text-slate-400">
-              <Link to="/competency-mapping" className="text-amber-300 hover:underline">
-                AI Trainer Match
+            {/* Quick Links */}
+            <div className="pt-2 border-t border-slate-800 flex items-center justify-between text-[11px] text-slate-400">
+              <Link to="/competency-mapping" onClick={() => setIsOpen(false)} className="text-sky-300 hover:underline">
+                Competency AI
               </Link>
               <span>•</span>
-              <Link to="/skill-matrix" className="text-teal-300 hover:underline">
-                Readiness Heatmap
+              <Link to="/skill-matrix" onClick={() => setIsOpen(false)} className="text-teal-300 hover:underline">
+                Skill Matrix
               </Link>
               <span>•</span>
-              <Link to="/verify-certificate" className="text-emerald-300 hover:underline">
+              <Link to="/verify-certificate" onClick={() => setIsOpen(false)} className="text-emerald-300 hover:underline">
                 Verify Cert
               </Link>
             </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 };
